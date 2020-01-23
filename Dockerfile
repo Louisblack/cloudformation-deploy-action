@@ -1,22 +1,12 @@
-FROM ubuntu
+FROM linuxbrew/brew
 
-LABEL version="1.0.0"
+RUN brew tap aws/tap; \
+brew install awscli aws-sam-cli
 
-LABEL com.github.actions.name="CloudFormation Deploy Action"
-LABEL com.github.actions.description="Deploy AWS CloudFormation Stack"
-LABEL com.github.actions.icon="upload-cloud"
-LABEL com.github.actions.color="orange"
+RUN	useradd -m -s /bin/bash samcli \
+	&& echo 'samcli ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
 
-LABEL repository="https://github.com/mgenteluci/cloudformation-deploy-action"
-LABEL homepage="https://github.com/mgenteluci/cloudformation-deploy-action"
-LABEL maintainer="Matheus Genteluci <mgenteluci97@gmail.com>"
-
-RUN apt-get update && apt-get install -y awscli
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-RUN echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-RUN brew --version
-RUN brew tap aws/tap
-RUN brew install aws-sam-cli
+USER samcli
 
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
