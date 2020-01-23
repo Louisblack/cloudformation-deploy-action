@@ -73,5 +73,5 @@ echo "[default]
 output = text
 region = $AWS_REGION" > ~/.aws/config
 
-sam package --s3-bucket $AWS_DEPLOY_BUCKET --output-template-file packaged.yaml
+sam package --s3-bucket $AWS_DEPLOY_BUCKET --template $TEMPLATE --output-template-file packaged.yaml
 sam deploy --template-file packaged.yaml --stack-name $AWS_STACK_NAME $CAPABILITIES
