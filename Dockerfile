@@ -13,6 +13,7 @@ LABEL maintainer="Matheus Genteluci <mgenteluci97@gmail.com>"
 
 RUN apt-get update && apt-get install -y awscli
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+RUN echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
 RUN brew --version
 RUN brew tap aws/tap
 RUN brew install aws-sam-cli
