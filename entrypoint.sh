@@ -73,5 +73,5 @@ echo "[default]
 output = text
 region = $AWS_REGION" > ~/.aws/config
 
-aws cloudformation package --template-file $TEMPLATE --output-template-file serverless-output.yaml --s3-bucket $AWS_DEPLOY_BUCKET $AWS_BUCKET_PREFIX $FORCE_UPLOAD $USE_JSON
-aws cloudformation deploy --template-file serverless-output.yaml --stack-name $AWS_STACK_NAME $CAPABILITIES $PARAMETER_OVERRIDES
+sam package --s3-bucket $AWS_DEPLOY_BUCKET
+sam deploy --template-file packaged.yaml --stack-name $AWS_STACK_NAME $CAPABILITIES
